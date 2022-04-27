@@ -1,6 +1,8 @@
 package com.example.olioht;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.SearchView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -16,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
+    SearchView searchView;
+    CovidCenter C;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +36,14 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+        searchView = (SearchView) findViewById(R.id.searchView);
+
+        C = CovidCenter.getInstance();
     }
 
+    public void search(View V) {
+        String searchStr = "Tampere";
+        System.out.println(searchView.getQuery());
+        //CovidData.search(searchStr);
+    }
 }
