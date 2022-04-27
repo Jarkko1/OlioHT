@@ -9,7 +9,10 @@ import java.util.ArrayList;
 public class CovidCenter {
 
     private static CovidCenter C = null;
-    ArrayList<Area> areaList = null;
+
+    private ArrayList<Area> areaList = null;  /* lista alueista ja niiden tunnuksista.
+    Käyttö: areaList.get(i).getId() tai areaList.get(i).getLabel(); */
+
     public static CovidCenter getInstance() {
         if (C == null) {
             C = new CovidCenter();
@@ -35,6 +38,10 @@ public class CovidCenter {
             }
         }
         return(id);
+    }
+
+    public ArrayList<Area> getAreaList() {
+        return(areaList);
     }
 
 }
