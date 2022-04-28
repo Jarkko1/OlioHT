@@ -46,4 +46,8 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(searchView.getQuery());
         //CovidData.search(searchStr);
     }
+
+    public void test(View V) {
+        C.test();
+    }
 }

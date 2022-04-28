@@ -13,6 +13,8 @@ public class CovidCenter {
     private ArrayList<Area> areaList = null;  /* lista alueista ja niiden tunnuksista.
     Käyttö: areaList.get(i).getId() tai areaList.get(i).getLabel(); */
 
+    private ArrayList<PinnedArea> pinnedAreaList = null;
+
     public static CovidCenter getInstance() {
         if (C == null) {
             C = new CovidCenter();
@@ -44,4 +46,8 @@ public class CovidCenter {
         return(areaList);
     }
 
+    public void test() {
+        areaList = null;
+        areaList = CovidAPI.getAreaList();
+    }
 }

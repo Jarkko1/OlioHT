@@ -5,7 +5,8 @@
       <map>
         <entry key="..\:/Users/jarkk/Documents/Oio-ohjelmointi/HT/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.2777777777777778" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.24480133056640627" />
       </map>
     </option>

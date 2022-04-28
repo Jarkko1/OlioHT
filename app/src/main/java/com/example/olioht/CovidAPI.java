@@ -39,23 +39,25 @@ public class CovidAPI {
         String json = getJSON(urlString);
         Area A;
         hcdList = jsonToAreaList(json);
-        for (int i = 0; i < hcdList.size(); i++) {
-            String currentId = hcdList.get(i).getId();
-            urlString = "https://sampo.thl.fi/pivot/prod/fi/epirapo/covid19case/fact_epirapo_covid19case.json?row=hcdmunicipality2020-" + currentId + "&filter=measure-444833";
-            json = getJSON(urlString);
-            cityList.addAll(jsonToAreaList(json));
+        if (hcdList != null) {
+            for (int i = 0; i < hcdList.size(); i++) {
+                String currentId = hcdList.get(i).getId();
+                urlString = "https://sampo.thl.fi/pivot/prod/fi/epirapo/covid19case/fact_epirapo_covid19case.json?row=hcdmunicipality2020-" + currentId + "&filter=measure-444833";
+                json = getJSON(urlString);
+                cityList.addAll(jsonToAreaList(json));
+            }
+            System.out.println("###Sairaanhoitopiirit:###");
+            for (int i = 0; i < hcdList.size(); i++) {
+                A = hcdList.get(i);
+                System.out.println(A.getId() + " " + A.getLabel());
+            }
+            System.out.println("###Kunnat:###");
+            for (int i = 0; i < cityList.size(); i++) {
+                A = cityList.get(i);
+                System.out.println(A.getId() + " " + A.getLabel());
+            }
         }
-        System.out.println("###Sairaanhoitopiirit:###");
-        for (int i = 0; i < hcdList.size(); i++) {
-            A = hcdList.get(i);
-            System.out.println(A.getId() + " " + A.getLabel());
-        }
-        System.out.println("###Kunnat:###");
-        for (int i = 0; i < cityList.size(); i++) {
-            A = cityList.get(i);
-            System.out.println(A.getId() + " " + A.getLabel());
-        }
-        return(cityList);
+        return (cityList);
     }
 
     public static ArrayList<CovidData> getAreaCovidData(String areaId) {
@@ -99,14 +101,14 @@ public class CovidAPI {
     }
 
     /* Tämä siis hakee itse datan. urlString muuttujaa muokkaamalla voi rajata dataa */
-    private static String getJSON(String URLString) {
+    private static String getJSON(String urlString) {
         String response = null;
         try {
             //URL url = new URL("http://www.hel.fi/palvelukarttaws/rest/v4/department/");
             //String urlString = "https://sampo.thl.fi/pivot/prod/fi/epirapo/covid19case/fact_epirapo_covid19case.json?column=dateweek20200101-509030&filter=measure-444833";
             //String urlString = "https://sampo.thl.fi/pivot/prod/fi/epirapo/covid19case/fact_epirapo_covid19case.json";
             //String urlString = "http://www.hel.fi/palvelukarttaws/rest/v4/department/";
-            URL url = new URL(URLString);
+            URL url = new URL(urlString);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             InputStream in = new BufferedInputStream(conn.getInputStream());
@@ -130,6 +132,8 @@ public class CovidAPI {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("ERROR 4");
+            System.out.println(urlString);
+
         }
         return(response);
     }
