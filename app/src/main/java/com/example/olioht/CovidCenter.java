@@ -1,9 +1,5 @@
 package com.example.olioht;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import java.util.ArrayList;
 
 public class CovidCenter {
@@ -13,7 +9,9 @@ public class CovidCenter {
     private ArrayList<Area> areaList = null;  /* lista alueista ja niiden tunnuksista.
     Käyttö: areaList.get(i).getId() tai areaList.get(i).getLabel(); */
 
-    private ArrayList<PinnedArea> pinnedAreaList = null;
+    private ArrayList<AreaCovidData> pinnedAreaList = null;
+
+    private ArrayList<CovidData> covidDataList = null;
 
     public static CovidCenter getInstance() {
         if (C == null) {
@@ -48,6 +46,6 @@ public class CovidCenter {
 
     public void test() {
         areaList = null;
-        areaList = CovidAPI.getAreaList();
+        covidDataList = CovidAPI.getAreaCovidData("445234");
     }
 }

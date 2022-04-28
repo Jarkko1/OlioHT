@@ -1,40 +1,48 @@
 package com.example.olioht;
 
 public class CovidData {
-    /* Ajattelin että tällaiseen luokkaan voisi tallentaa yksittäisen viikon covid
-    covid-tapaukset alueella. Näin ne saa datasta helposti.
-    Vaatii vielä miettimistä.
-     */
-    private String caseAreaID;
-    private int caseCount;
-    private String caseTime;
 
-    public CovidData(String areaId, int count, String time) {
-        caseAreaID = areaId;
-        caseCount = count;
-        caseTime = time;
+    private String idnum; // id-numero
+    private String index; // indeksi
+    private String label; // teksti, esim 2022 viikko 18
+    private String value; // tapausten lukumäärä
+
+    public String getIndex() {
+        return index;
     }
 
-    /* Metodeja pitää vielä, muokata (kopioitu suoraan Area-luokasta)
-
-    public void setId(String cityId) {
-        this.id = cityId;
-    }
-
-    public void setLabel(String cityLabel) {
-        this.id = cityLabel;
-    }
-
-    public String getId() {
-        return(this.id);
+    public void setIndex(String index) {
+        this.index = index;
     }
 
     public String getLabel() {
-        return(this.label);
+        return label;
     }
 
-    public String getIndex() {
-        return(this.index);
+    public void setLabel(String label) {
+        this.label = label;
     }
-     */
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public String getIdnum() {
+        return idnum;
+    }
+
+    public void setIdnum(String idnum) {
+        this.idnum = idnum;
+    }
+
+    public CovidData(String dataIdnum, String dataIndex, String dataLabel, String dataValue) {
+        idnum = dataIdnum;
+        index = dataIndex;
+        label = dataLabel;
+        value = dataValue;
+    }
 }
