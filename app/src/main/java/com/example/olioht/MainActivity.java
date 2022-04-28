@@ -1,6 +1,7 @@
 package com.example.olioht;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.SearchView;
 
@@ -37,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
         searchView = (SearchView) findViewById(R.id.searchView);
-
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         C = CovidCenter.getInstance();
     }
 
