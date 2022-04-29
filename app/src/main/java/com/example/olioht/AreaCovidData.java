@@ -7,6 +7,16 @@ public class AreaCovidData {
     private Area area = null;
     private ArrayList<CovidData> cases = null;
 
+    public AreaCovidData (Area a, ArrayList<CovidData> c) {
+        area = a;
+        cases = c;
+    }
+/*
+    public AreaCovidData () {
+        area = null;
+        cases = null;
+    }
+*/
     public Area getArea() {
         return area;
     }

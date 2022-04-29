@@ -5,9 +5,9 @@
       <map>
         <entry key="..\:/Users/jarkk/Documents/Oio-ohjelmointi/HT/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.17817596435546879" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.2777777777777778" />
-        <entry key="app/src/main/res/layout/fragment_search.xml" value="0.24480133056640627" />
+        <entry key="app/src/main/res/layout/fragment_search.xml" value="0.1" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.14583333333333334" />
       </map>
     </option>

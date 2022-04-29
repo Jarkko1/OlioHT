@@ -29,12 +29,15 @@ public class CovidAPI {
 
     /* baseUrl -muuttuja sisältää kaikille API-osoitteille yhteisen osan URL-osoitetta. */
     private static String baseUrl = "https://sampo.thl.fi/pivot/prod/fi/epirapo/covid19case/fact_epirapo_covid19case.json";
-    private static String rowParameter = "?row=";
-    private static String columnParameter = "&column=";
-    private static String filterParameter = "&filter=";
+    private static String qmk = "?";
+    private static String aps = "&";
+    private static String hpn = "-";
+    private static String rpm = "row=";
+    private static String cpm = "column=";
+    private static String fpm = "filter=";
     private static String hcdMunicipality = "hcdmunicipality2020-";
     private static String dateWeek = "dateweek20200101-";
-    private static String measure = "=measure-";
+    private static String measure = "measure-";
     private static String allAreas = "445222";
     private static String allTimes = "509030";
     private static String covidFilter = "444833";
@@ -43,43 +46,43 @@ public class CovidAPI {
     public static ArrayList<Area> getAreaList(){
         ArrayList<Area> cityList = new ArrayList<>();
         ArrayList<Area> hcdList = new ArrayList<>();
-        String urlString = baseUrl + rowParameter + hcdMunicipality + allAreas + filterParameter
-                + measure + covidFilter;
+        String urlString = baseUrl + qmk + rpm + hcdMunicipality + allAreas + aps + fpm +
+                measure + covidFilter;
+        System.out.println(urlString);
         String json = getJSON(urlString);
         Area A;
         hcdList = jsonToAreaList(json);
         if (hcdList != null) {
             for (int i = 0; i < hcdList.size(); i++) {
-                String currentId = hcdList.get(i).getId();
-                urlString = baseUrl+ rowParameter + hcdMunicipality + currentId + filterParameter
-                        + measure + covidFilter;
+                String currentId = hcdList.get(i).getIdnum();
+                urlString = baseUrl + qmk + rpm + hcdMunicipality + currentId + aps + fpm +
+                        measure + covidFilter;
                 json = getJSON(urlString);
                 cityList.addAll(jsonToAreaList(json));
             }
             System.out.println("###Sairaanhoitopiirit:###");
             for (int i = 0; i < hcdList.size(); i++) {
                 A = hcdList.get(i);
-                System.out.println(A.getId() + " " + A.getLabel());
+                System.out.println(A.getIdnum() + " " + A.getLabel());
             }
             System.out.println("###Kunnat:###");
             for (int i = 0; i < cityList.size(); i++) {
                 A = cityList.get(i);
-                System.out.println(A.getId() + " " + A.getLabel());
+                System.out.println(A.getIdnum() + " " + A.getLabel());
             }
         }
         return (cityList);
     }
 
-    public static ArrayList<CovidData> getAreaCovidData(String areaId) {
+    public static AreaCovidData getAreaCovidData(Area area) {
+        String areaIdnum = area.getIdnum();
         String dataIdnum; String dataIndex; String dataLabel; String dataValue;
         ArrayList<CovidData> covidDataList = null; //new ArrayList<>();
-        String urlParam = rowParameter + hcdMunicipality + areaId + columnParameter +
-                dateWeek + allTimes + filterParameter + measure + covidFilter;
-        String urlString = baseUrl + urlParam;
+        String urlString = baseUrl + qmk + rpm + hcdMunicipality + areaIdnum + aps +
+                cpm + dateWeek + allTimes + aps + fpm + measure + covidFilter;
+        System.out.println(urlString);
         String json = getJSON(urlString);
-        System.out.println(json);
-        System.out.println("##################################################");
-        /* do something with the json here */
+        //System.out.println(json);
         try {
             JSONObject jsonObject = new JSONObject(json);
             JSONObject jsonDataset = jsonObject.getJSONObject("dataset");
@@ -91,7 +94,6 @@ public class CovidAPI {
             JSONObject jsonValue = jsonDataset.getJSONObject("value");
             Iterator indexKeys = jsonIndex.keys();
             Iterator labelKeys = jsonLabel.keys();
-            System.out.println("##!!##");
             covidDataList = new ArrayList<>();
             while (indexKeys.hasNext()) {
                 dataIdnum = null; dataIndex = null; dataLabel = null; dataValue = null;
@@ -104,14 +106,14 @@ public class CovidAPI {
             }
             for (int i = 0; i < covidDataList.size(); i++) {
                 CovidData c = covidDataList.get(i);
-                System.out.print(i + " " + c.getIdnum() + " " + c.getIndex() + " "
+                System.out.println(i + " " + c.getIdnum() + " " + c.getIndex() + " "
                         + c.getLabel() + " " + c.getValue());
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return(covidDataList);
+        AreaCovidData areaCovidData = new AreaCovidData(area, covidDataList);
+        return(areaCovidData);
     }
 
     private static ArrayList<Area> jsonToAreaList(String json) {
@@ -145,6 +147,7 @@ public class CovidAPI {
 
     /* Tämä siis hakee itse datan. urlString muuttujaa muokkaamalla voi rajata dataa */
     private static String getJSON(String urlString) {
+        System.out.println(urlString);
         String response = null;
         try {
             //URL url = new URL("http://www.hel.fi/palvelukarttaws/rest/v4/department/");

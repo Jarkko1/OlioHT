@@ -7,6 +7,13 @@ public class CovidData {
     private String label; // teksti, esim 2022 viikko 18
     private String value; // tapausten lukumäärä
 
+    public CovidData(String dataIdnum, String dataIndex, String dataLabel, String dataValue) {
+        idnum = dataIdnum;
+        index = dataIndex;
+        label = dataLabel;
+        value = dataValue;
+    }
+
     public String getIndex() {
         return index;
     }
@@ -37,12 +44,5 @@ public class CovidData {
 
     public void setIdnum(String idnum) {
         this.idnum = idnum;
-    }
-
-    public CovidData(String dataIdnum, String dataIndex, String dataLabel, String dataValue) {
-        idnum = dataIdnum;
-        index = dataIndex;
-        label = dataLabel;
-        value = dataValue;
     }
 }

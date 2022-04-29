@@ -5,33 +5,37 @@ public class Area {
     Alue-luokka; sisältää alueen tunnuksen ja nimen (sekä indeksin...?).
     Alue voi olla kunta tai sairaanhoitopiiri.
      */
-    private String id;
+    private String idnum;
     private String label;
     private String index;
 
     public Area(String areaId, String areaLabel, String areaIndex) {
-        id = areaId;
-        label = areaLabel;
-        index = areaIndex;
+        this.idnum = areaId;
+        this.label = areaLabel;
+        this.index = areaIndex;
     }
 
-    public void setId(String cityId) {
-        this.id = cityId;
+    public String getIdnum() {
+        return idnum;
     }
 
-    public void setLabel(String cityLabel) {
-        this.id = cityLabel;
-    }
-
-    public String getId() {
-        return(this.id);
+    public void setIdnum(String idnum) {
+        this.idnum = idnum;
     }
 
     public String getLabel() {
-        return(this.label);
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public String getIndex() {
-        return(this.index);
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
     }
 }
