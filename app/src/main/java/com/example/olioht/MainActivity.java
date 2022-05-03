@@ -1,6 +1,8 @@
 package com.example.olioht;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -49,16 +51,17 @@ public class MainActivity extends AppCompatActivity {
     //ArrayList townList;
     ArrayAdapter<String> arrayAdapter;
 
-    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = this; //getApplicationContext();
+        String langCode = loadLang();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         SD = SaveData.newInstance(this);
-        C = DataCenter.getInstance();
         S = Settings.getInstance();
+        S.setLanguageWithLangCode(langCode);
+        C = DataCenter.getInstance();
+        //setLang(langCode);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -104,10 +107,40 @@ public class MainActivity extends AppCompatActivity {
         Resources resources = this.getResources();
         Configuration config = resources.getConfiguration();
         config.setLocale(locale);
+        saveLocale(langCode);
         resources.updateConfiguration(config,resources.getDisplayMetrics());
         finish();
         startActivity(getIntent());
     }
 
+    public void changeLang(String lang) {
+        if (lang.equalsIgnoreCase(""))
+            return;
+        Locale myLocale = new Locale(lang);
+        saveLocale(lang);
+        Locale.setDefault(myLocale);
+        android.content.res.Configuration config = new android.content.res.Configuration();
+        config.locale = myLocale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 
+    }
+
+    public String loadLang() {
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs",
+                Activity.MODE_PRIVATE);
+        String language = prefs.getString(langPref, "");
+        System.out.println(language);
+        changeLang(language);
+        return language;
+    }
+
+    public void saveLocale(String lang) {
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs",
+                Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(langPref, lang);
+        editor.commit();
+    }
 }

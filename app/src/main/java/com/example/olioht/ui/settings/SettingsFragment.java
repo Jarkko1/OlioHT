@@ -51,10 +51,12 @@ public class SettingsFragment extends Fragment {
                 if (selectedLang.equals("English")){
                     S.setLanguage(0);
                     D.refreshData();
+                    //((MainActivity)getActivity()).setLang("en");
                     ((MainActivity)getActivity()).setLang("en");
                 }else if (selectedLang.equals("Suomi")){
                     S.setLanguage(1);
                     D.refreshData();
+                    //((MainActivity)getActivity()).setLang("fi");
                     ((MainActivity)getActivity()).setLang("fi");
                 }
             }
