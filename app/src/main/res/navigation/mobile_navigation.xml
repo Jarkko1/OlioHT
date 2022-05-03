@@ -11,7 +11,7 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_navigation_home_to_blankFragment"
+            android:id="@+id/action_navigation_home_to_dataFragment"
             app:destination="@id/blankFragment" />
     </fragment>
 
@@ -21,7 +21,7 @@
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" >
         <action
-            android:id="@+id/action_navigation_search_to_blankFragment"
+            android:id="@+id/action_navigation_search_to_dataFragment"
             app:destination="@id/blankFragment" />
         <action
             android:id="@+id/action_navigation_search_to_navigation_home"

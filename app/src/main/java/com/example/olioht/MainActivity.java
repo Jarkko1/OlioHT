@@ -56,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
         context = this; //getApplicationContext();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+        SD = SaveData.newInstance(this);
         C = DataCenter.getInstance();
         S = Settings.getInstance();
-        SD = SaveData.getInstance(this);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
 
          */
-        Navigation.findNavController(view).navigate(R.id.action_navigation_home_to_blankFragment);
+        Navigation.findNavController(view).navigate(R.id.action_navigation_home_to_dataFragment);
     }
 
     public void setLang(String langCode){

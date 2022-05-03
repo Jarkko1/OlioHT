@@ -1,5 +1,7 @@
 package com.example.olioht;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -11,8 +13,9 @@ public class DataCenter {
 
     private ArrayList<Area> areaList = null; // List of all areas
     private ArrayList<String> areaLabels = null; // Area labels as strings for the search page
-    private ArrayList<AreaData> pinnedAreaData = null; // Areas pinned to the home page
+    private ArrayList<AreaData> pinnedAreaData = new ArrayList<>(); // Areas pinned to the home page
     private AreaData currentAreaData = null;
+    private SaveData SD;
 
     public static DataCenter getInstance() {
         if (C == null) {
@@ -22,11 +25,23 @@ public class DataCenter {
     }
 
     private DataCenter() {
+        SD = SaveData.getInstance();
         areaList = DataAPI.getAreaList();
         areaLabels = areaLabelsList();
-        pinnedAreaData = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            pinnedAreaData.add(DataAPI.getAreaCovidData(areaList.get(i)));
+        if (SD == null) {System.out.println("Voi ei");}
+        ArrayList<String> pinnedAreaIdnums = SD.readPinned();
+        System.out.println("TÄRKEÄ" + pinnedAreaIdnums.size());
+        for (int i = 0; i < pinnedAreaIdnums.size(); i++) {
+            System.out.println(pinnedAreaIdnums.get(i));
+            Area area = convertIdnumToArea(pinnedAreaIdnums.get(i));
+            if (area != null) {
+                AreaData areaData = DataAPI.getAreaCovidData(area);
+                if (areaData != null) {
+                    pinnedAreaData.add(areaData);
+                }
+            } else {
+                System.out.println("MItä");
+            }
         }
     }
 
@@ -65,7 +80,7 @@ public class DataCenter {
         sitä vastaavaksi id numeroksi */
         Area area = null;
         for (int i = 0; i < areaList.size(); i++) {
-            if (areaList.get(i).getIdnum() == areaIdnum) {
+            if (areaIdnum.equals(areaList.get(i).getIdnum())) {
                 area = areaList.get(i);
                 break;
             }
@@ -83,12 +98,6 @@ public class DataCenter {
 
     public ArrayList<AreaData> getPinnedAreaCovidData() {
         return(pinnedAreaData);
-    }
-
-    public AreaData getSomeAreaCovidData() {
-        Area area = areaList.get(19);
-        AreaData areaData = DataAPI.getAreaCovidData(area);
-        return areaData;
     }
 
     public ArrayList<String> areaLabelsList() {
@@ -125,12 +134,15 @@ public class DataCenter {
 
     public boolean isThisPinned(AreaData areaData) {
         boolean pinned = false;
-        for (int i = 0; i < pinnedAreaData.size(); i++) {
-            AreaData pinnedAreaData = this.pinnedAreaData.get(i);
-            String thisAreaIdnum = areaData.getArea().getIdnum();
-            String pinnedAreaIdnum = pinnedAreaData.getArea().getIdnum();
-            if (thisAreaIdnum.equals(pinnedAreaIdnum)) {
-                pinned = true; break;
+        if (pinnedAreaData != null) {
+            for (int i = 0; i < pinnedAreaData.size(); i++) {
+                AreaData pinnedAreaData = this.pinnedAreaData.get(i);
+                String thisAreaIdnum = areaData.getArea().getIdnum();
+                String pinnedAreaIdnum = pinnedAreaData.getArea().getIdnum();
+                if (thisAreaIdnum.equals(pinnedAreaIdnum)) {
+                    pinned = true;
+                    break;
+                }
             }
         }
         return pinned;
@@ -145,6 +157,7 @@ public class DataCenter {
                 break;
             }
         }
+        SD.writePinned();
         return;
     }
 
@@ -159,6 +172,7 @@ public class DataCenter {
             }
         }*/
         pinnedAreaData.add(areaData);
+        SD.writePinned();
         return;
     }
 
@@ -176,6 +190,8 @@ public class DataCenter {
         if (currentAreaData != null) {
             currentAreaData = DataAPI.getAreaCovidData(currentAreaData.getArea());
         }
+
+        areaLabels = areaLabelsList();
         return;
     }
 

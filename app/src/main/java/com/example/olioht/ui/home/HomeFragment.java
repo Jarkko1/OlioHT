@@ -49,7 +49,7 @@ public class HomeFragment extends Fragment {
                         ArrayList<AreaData> pinnedAreaData = C.getPinnedAreaCovidData();
                         AreaData currentAreaData = pinnedAreaData.get(position);
                         C.setCurrentAreaData(currentAreaData);
-                        Navigation.findNavController(view).navigate(R.id.action_navigation_home_to_blankFragment);
+                        Navigation.findNavController(view).navigate(R.id.action_navigation_home_to_dataFragment);
                     }
 
                     @Override public void onLongItemClick(View view, int position) {

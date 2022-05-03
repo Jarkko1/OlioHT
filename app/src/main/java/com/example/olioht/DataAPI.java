@@ -93,55 +93,73 @@ public class DataAPI {
     }
 
     public static AreaData getAreaCovidData(Area area) {
-        String areaIdnum = area.getIdnum();
-        String dataIdnum; String dataIndex; String dataLabel; String dataValue;
-        ArrayList<Data> covidDataList = null; //new ArrayList<>();
+        AreaData areaData = null;
+        if (area != null) {
+            String areaIdnum = area.getIdnum();
+            String dataIdnum;
+            String dataIndex;
+            String dataLabel;
+            String dataValue;
+            ArrayList<Data> covidDataList = null; //new ArrayList<>();
 
-        S = Settings.getInstance();
-        int language = S.getLanguage();
-        String baseUrl;
-        if (language == 0) {
-            baseUrl = baseUrlEn;
-        } else if (language == 1) {
-            baseUrl = baseUrlFi;
-        } else {
-            baseUrl = baseUrlEn;
-        }
-
-        String urlString = baseUrl + qmk + rpm + hcdMunicipality + areaIdnum + aps +
-                cpm + dateWeek + allTimes + aps + fpm + measure + covidFilter;
-        System.out.println(urlString);
-        String json = getJSON(urlString);
-        //System.out.println(json);
-        try {
-            JSONObject jsonObject = new JSONObject(json);
-            JSONObject jsonDataset = jsonObject.getJSONObject("dataset");
-            JSONObject jsonDimension = jsonDataset.getJSONObject("dimension");
-            JSONObject jsonHcdmunicipality2020 = jsonDimension.getJSONObject("dateweek20200101");
-            JSONObject jsonCategory = jsonHcdmunicipality2020.getJSONObject("category");
-            JSONObject jsonIndex = jsonCategory.getJSONObject("index");
-            JSONObject jsonLabel = jsonCategory.getJSONObject("label");
-            JSONObject jsonValue = jsonDataset.getJSONObject("value");
-            Iterator indexKeys = jsonIndex.keys();
-            Iterator labelKeys = jsonLabel.keys();
-            covidDataList = new ArrayList<>();
-            while (indexKeys.hasNext()) {
-                dataIdnum = null; dataIndex = null; dataLabel = null; dataValue = null;
-                dataIdnum = (String) indexKeys.next();
-                if (jsonIndex.has(dataIdnum)) { dataIndex = jsonIndex.getString(dataIdnum); };
-                if (jsonLabel.has(dataIdnum)) { dataLabel = jsonLabel.getString(dataIdnum); };
-                if (jsonValue.has(dataIndex)) { dataValue = jsonValue.getString(dataIndex); };
-                if (dataValue != null) {
-                    covidDataList.add(new Data(dataIdnum, dataIndex, dataLabel, dataValue));
-                }
-                //System.out.println(dataIdnum + " " + dataIndex + " " + dataLabel + " " + dataValue);
+            S = Settings.getInstance();
+            int language = S.getLanguage();
+            String baseUrl;
+            if (language == 0) {
+                baseUrl = baseUrlEn;
+            } else if (language == 1) {
+                baseUrl = baseUrlFi;
+            } else {
+                baseUrl = baseUrlEn;
             }
-            Collections.reverse(covidDataList);
-        } catch (JSONException e) {
-            e.printStackTrace();
+
+            String urlString = baseUrl + qmk + rpm + hcdMunicipality + areaIdnum + aps +
+                    cpm + dateWeek + allTimes + aps + fpm + measure + covidFilter;
+            System.out.println(urlString);
+            String json = getJSON(urlString);
+            //System.out.println(json);
+            try {
+                JSONObject jsonObject = new JSONObject(json);
+                JSONObject jsonDataset = jsonObject.getJSONObject("dataset");
+                JSONObject jsonDimension = jsonDataset.getJSONObject("dimension");
+                JSONObject jsonHcdmunicipality2020 = jsonDimension.getJSONObject("dateweek20200101");
+                JSONObject jsonCategory = jsonHcdmunicipality2020.getJSONObject("category");
+                JSONObject jsonIndex = jsonCategory.getJSONObject("index");
+                JSONObject jsonLabel = jsonCategory.getJSONObject("label");
+                JSONObject jsonValue = jsonDataset.getJSONObject("value");
+                Iterator indexKeys = jsonIndex.keys();
+                Iterator labelKeys = jsonLabel.keys();
+                covidDataList = new ArrayList<>();
+                while (indexKeys.hasNext()) {
+                    dataIdnum = null;
+                    dataIndex = null;
+                    dataLabel = null;
+                    dataValue = null;
+                    dataIdnum = (String) indexKeys.next();
+                    if (jsonIndex.has(dataIdnum)) {
+                        dataIndex = jsonIndex.getString(dataIdnum);
+                    }
+
+                    if (jsonLabel.has(dataIdnum)) {
+                        dataLabel = jsonLabel.getString(dataIdnum);
+                    }
+
+                    if (jsonValue.has(dataIndex)) {
+                        dataValue = jsonValue.getString(dataIndex);
+                    }
+
+                    if (dataValue != null && dataIdnum.equals(allTimes) == false) {
+                        covidDataList.add(new Data(dataIdnum, dataIndex, dataLabel, dataValue));
+                    }
+                    //System.out.println(dataIdnum + " " + dataIndex + " " + dataLabel + " " + dataValue);
+                }
+                Collections.reverse(covidDataList);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            areaData = new AreaData(area, covidDataList);
         }
-        AreaData areaData = new AreaData(area, covidDataList);
-        return(areaData);
+        return (areaData);
     }
 
     private static ArrayList<Area> jsonToAreaList(String json) {

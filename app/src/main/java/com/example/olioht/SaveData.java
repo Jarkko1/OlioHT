@@ -13,6 +13,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -33,24 +34,94 @@ public class SaveData {
     private Settings S;
     private int language;
     private Context context;
-    private String fileName = "storage.json";
+    private String pinnedFileName = "pinned.json";
+    private String settingsFileName = "settings.json";
 
-    public static SaveData getInstance(Context context) {
+    public static SaveData newInstance(Context context) {
         if (SD == null) {
             SD = new SaveData(context);
         }
         return(SD);
     }
+    public static SaveData getInstance() {
+        return(SD);
+    }
 
     private SaveData(Context context) {
         this.context = context;
-        S = Settings.getInstance();
+    }
+
+    public void writePinned() {
         D = DataCenter.getInstance();
-        writeFile("JOOPAJOO");
-        readFile();
+        String json = "";
+        ArrayList<String> pinnedAreaIdnums = D.getPinnedAreaIdnums();
+        try {
+            JSONObject jsonPinned = new JSONObject();
+            JSONArray jsonPinnedArray = new JSONArray(pinnedAreaIdnums);
+            jsonPinned.put("Pinned", jsonPinnedArray);
+            json = jsonPinned.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        writeFile(json);
+    }
+
+    public ArrayList<String> readPinned() {
+        String json;
+        ArrayList<String> pinnedAreaIdnums = new ArrayList<>();
+        json = readFile();
+        try {
+            JSONObject jsonPinned = new JSONObject(json);
+            JSONArray jsonPinnedArray = jsonPinned.getJSONArray("Pinned");
+            if (jsonPinnedArray != null) {
+                for (int i = 0; i < jsonPinnedArray.length(); i++) {
+                    pinnedAreaIdnums.add(jsonPinnedArray.getString(i));
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return pinnedAreaIdnums;
     }
 
     private String readFile() {
+        String json = "";
+        String line = "";
+        try {
+            InputStream inputStream = context.openFileInput(pinnedFileName);
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ( (line = bufferedReader.readLine()) != null ) {
+                    stringBuilder.append("\n").append(line);
+                }
+
+                inputStream.close();
+                json = stringBuilder.toString();
+            }
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return json;
+    }
+
+    private void writeFile(String json) {
+        try {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(pinnedFileName, Context.MODE_PRIVATE));
+            outputStreamWriter.write(json);
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+/*
+    private String readFile(String fileName) {
         System.out.println("readFile START");
         String json = "";
         String line = "";
@@ -63,7 +134,8 @@ public class SaveData {
             inputStream.close();
             /*DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document parseDoc documentBuilder.parse(inputStream);*/
-        } catch (FileNotFoundException e) {
+        /*
+} catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,13 +143,15 @@ public class SaveData {
         }
         System.out.println("readFile END");
         return json;
-    }
+    }*/
 
+    /*
     private void writeFile(String json) {
         System.out.println("writeFile START");
         try {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(fileName, Context.MODE_PRIVATE));
             outputStreamWriter.write(json);
+            System.out.println(json);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println("FNF");
@@ -86,6 +160,30 @@ public class SaveData {
         }
         System.out.println("writeFile END");
     }
+
+    private boolean create(Context context, String fileName, String jsonString){
+        String FILENAME = "storage.json";
+        try {
+            FileOutputStream fos = context.openFileOutput(fileName,Context.MODE_PRIVATE);
+            if (jsonString != null) {
+                fos.write(jsonString.getBytes());
+            }
+            fos.close();
+            return true;
+        } catch (FileNotFoundException fileNotFound) {
+            return false;
+        } catch (IOException ioException) {
+            return false;
+        }
+
+    }
+
+    public boolean isFilePresent(Context context, String fileName) {
+        String path = context.getFilesDir().getAbsolutePath() + "/" + fileName;
+        File file = new File(path);
+        return file.exists();
+    }
+    */
 
     private void newFile() {
         try {

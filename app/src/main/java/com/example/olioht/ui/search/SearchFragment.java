@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -32,6 +33,12 @@ public class SearchFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSearchBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        return root;
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View root, @Nullable Bundle savedInstanceState) {
         searchView = (SearchView) root.findViewById(R.id.searchView);
         DataCenter C = DataCenter.getInstance();
         townList = C.getAreaLabels();
@@ -44,7 +51,7 @@ public class SearchFragment extends Fragment {
                 String areaLabel = adapterView.getItemAtPosition(i).toString();
                 System.out.println("Search: " + areaLabel);
                 C.searchData(areaLabel);
-                Navigation.findNavController(view).navigate(R.id.action_navigation_search_to_blankFragment);
+                Navigation.findNavController(view).navigate(R.id.action_navigation_search_to_dataFragment);
                 //Toast.makeText(getContext(),"You Click -"+adapterView.getItemAtPosition(i).toString(),Toast.LENGTH_SHORT);
             }
         });
@@ -62,8 +69,6 @@ public class SearchFragment extends Fragment {
                 return false;
             }
         });
-
-        return root;
     }
 
     @Override

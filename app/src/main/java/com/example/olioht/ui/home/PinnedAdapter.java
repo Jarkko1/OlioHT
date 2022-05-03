@@ -48,8 +48,11 @@ public class PinnedAdapter extends RecyclerView.Adapter<PinnedAdapter.CustomView
 
     @Override
     public int getItemCount() {
-        System.out.println("data size: " + dataList.size());
-        return dataList.size();
+        int size = 0;
+        if (dataList != null) {
+            size = dataList.size();
+        }
+        return size;
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
