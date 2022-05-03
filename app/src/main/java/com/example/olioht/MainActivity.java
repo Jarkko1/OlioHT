@@ -14,7 +14,7 @@ import android.widget.PopupMenu;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.example.olioht.ui.covidData.BlankFragment;
+import com.example.olioht.ui.data.DataFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 
     SearchView searchView;
-    CovidCenter C;
+    DataCenter C;
 
     ListView listView;
     ArrayList townList;
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        C = CovidCenter.getInstance();
+        C = DataCenter.getInstance();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 

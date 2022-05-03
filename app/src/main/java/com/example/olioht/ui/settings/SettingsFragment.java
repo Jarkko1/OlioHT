@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.olioht.MainActivity;
+import com.example.olioht.Settings;
 import com.example.olioht.databinding.FragmentSettingsBinding;
 import com.example.olioht.R;
 
@@ -25,7 +26,7 @@ import java.util.Locale;
 public class SettingsFragment extends Fragment {
 
     private FragmentSettingsBinding binding;
-
+    Settings S;
     Spinner spinner;
     public final String[] languages = {"...", "English", "Suomi"};
 
@@ -33,7 +34,7 @@ public class SettingsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
+        S = Settings.getInstance();
         spinner = (Spinner) root.findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item,languages);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -46,8 +47,10 @@ public class SettingsFragment extends Fragment {
 
                 if (selectedLang.equals("English")){
                     ((MainActivity)getActivity()).setLang("en");
+                    S.setLanguage(0);
                 }else if (selectedLang.equals("Suomi")){
                     ((MainActivity)getActivity()).setLang("fi");
+                    S.setLanguage(1);
                 }
             }
 

@@ -34,8 +34,8 @@ public class DataFragment extends Fragment {
     private boolean pinned;
     private ArrayList<String> dataList;
     private Button pinUnpinButton;
-    private String[] pin = {"Kiinnitä", "Pin"};
-    private String[] unpin = {"Poista kiinnitys", "Unpin"};
+    private String[] pin = {"Pin", "Kiinnitä"};
+    private String[] unpin = {"Unpin", "Poista kiinnitys"};
 
 
 
