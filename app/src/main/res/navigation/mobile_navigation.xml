@@ -37,7 +37,7 @@
     <fragment
         android:id="@+id/blankFragment"
         android:name="com.example.olioht.ui.data.DataFragment"
-        android:label="Alueen koronatapaukset"
+        android:label="@string/cases"
         tools:layout="@layout/fragment_data" >
         <action
             android:id="@+id/action_blankFragment_to_navigation_home"

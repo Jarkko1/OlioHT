@@ -1,12 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">OlioHT</string>
-    <string name="title_home">Home</string>
-    <string name="title_search">Search</string>
-    <string name="title_settings">Settings</string>
-    <string name="query_hint">Search for a district</string>
-    <string name="language">Language</string>
-    <string name="select_lang">Select language</string>
-    <string name="cases">Covid cases</string>
+    <string name="title_home">Koti</string>
+    <string name="title_search">Haku</string>
+    <string name="title_settings">Asetukset</string>
+    <string name="query_hint">Hae aluetta</string>
+    <string name="language">Kieli</string>
+    <string name="select_lang">Valitse kieli</string>
+    <string name="cases">Koronatapaukset</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -97,10 +98,9 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Morjesta</string>
 
     <!-- Strings for recycler view in Area covid data fragment -->
-    <string name="element_text">element</string>
+    <string name="element_text">elementti</string>
     <!-- Strings for recycler view in Area covid data fragment -->
-
 </resources>

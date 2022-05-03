@@ -70,41 +70,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
         searchView = (SearchView) findViewById(R.id.searchView);
 
-//
-//        townList = new ArrayList();
-//        townList.add("Rauma");
-//        townList.add("Tampere");
-//        listView = (ListView) findViewById(R.id.listView);
-//        arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,android.R.id.text1, townList);
-//        listView.setAdapter(arrayAdapter);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Toast.makeText(MainActivity.this,"You Click -"+adapterView.getItemAtPosition(i).toString(),Toast.LENGTH_SHORT);
-//            }
-//        });
-//
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                MainActivity.this.arrayAdapter.getFilter().filter(query);
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                MainActivity.this.arrayAdapter.getFilter().filter(newText);
-//                return false;
-//            }
-//        });
     }
-/*
-    public void search(View V) {
-        String searchStr = "Tampere";
-        System.out.println(searchView.getQuery());
-        //CovidData.search(searchStr);
-    }
-*/
+
     public void test(View view) {
         /*
         FragmentManager supportFragmentManager = getSupportFragmentManager();
@@ -127,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setLang(String langCode){
+        /* Sets the new Language for the app and restarts it */
+
         Locale locale = new Locale(langCode);
         locale.setDefault(locale);
         Resources resources = this.getResources();
