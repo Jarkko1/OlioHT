@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.olioht.DataCenter;
 import com.example.olioht.MainActivity;
 import com.example.olioht.Settings;
 import com.example.olioht.databinding.FragmentSettingsBinding;
@@ -27,6 +28,7 @@ public class SettingsFragment extends Fragment {
 
     private FragmentSettingsBinding binding;
     Settings S;
+    DataCenter D;
     Spinner spinner;
     public final String[] languages = {"...", "English", "Suomi"};
 
@@ -35,6 +37,7 @@ public class SettingsFragment extends Fragment {
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         S = Settings.getInstance();
+        D = DataCenter.getInstance();
         spinner = (Spinner) root.findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item,languages);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -46,11 +49,13 @@ public class SettingsFragment extends Fragment {
                 String selectedLang = adapterView.getItemAtPosition(i).toString();
 
                 if (selectedLang.equals("English")){
-                    ((MainActivity)getActivity()).setLang("en");
                     S.setLanguage(0);
+                    D.refreshData();
+                    ((MainActivity)getActivity()).setLang("en");
                 }else if (selectedLang.equals("Suomi")){
-                    ((MainActivity)getActivity()).setLang("fi");
                     S.setLanguage(1);
+                    D.refreshData();
+                    ((MainActivity)getActivity()).setLang("fi");
                 }
             }
 

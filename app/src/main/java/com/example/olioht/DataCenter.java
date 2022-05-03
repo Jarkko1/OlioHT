@@ -147,4 +147,19 @@ public class DataCenter {
         pinnedAreaData.add(areaData);
         return;
     }
+
+    public void refreshData() {
+        /* refresh areaList */
+        areaList = getAreaList();
+
+        /* refresh pinnedAreaData */
+        for (int i = 0; i < pinnedAreaData.size(); i++) {
+            Area area = pinnedAreaData.get(i).getArea();
+            pinnedAreaData.set(i, DataAPI.getAreaCovidData(area));
+        }
+
+        /* refresh currentAreaData */
+        currentAreaData = DataAPI.getAreaCovidData(currentAreaData.getArea());
+        return;
+    }
 }

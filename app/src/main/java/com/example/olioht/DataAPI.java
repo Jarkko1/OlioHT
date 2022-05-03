@@ -29,7 +29,7 @@ public class DataAPI {
     */
 
     /* baseUrl -muuttuja sisältää kaikille API-osoitteille yhteisen osan URL-osoitetta. */
-    private static String baseUrl = "https://sampo.thl.fi/pivot/prod/fi/epirapo/covid19case/fact_epirapo_covid19case.json";
+    private static String baseUrlFi = "https://sampo.thl.fi/pivot/prod/fi/epirapo/covid19case/fact_epirapo_covid19case.json";
     private static String baseUrlEn = "https://sampo.thl.fi/pivot/prod/en/epirapo/covid19case/fact_epirapo_covid19case.json";
     private static String qmk = "?";
     private static String aps = "&";
@@ -43,14 +43,27 @@ public class DataAPI {
     private static String allAreas = "445222";
     private static String allTimes = "509030";
     private static String covidFilter = "444833";
-
+    private static Settings S;
 
     public static ArrayList<Area> getAreaList(){
         ArrayList<Area> cityList = new ArrayList<>();
         ArrayList<Area> hcdList = new ArrayList<>();
+
+        S = Settings.getInstance();
+        int language = S.getLanguage();
+        String baseUrl;
+        if (language == 0) {
+            baseUrl = baseUrlEn;
+        } else if (language == 1) {
+            baseUrl = baseUrlFi;
+        } else {
+            baseUrl = baseUrlEn;
+        }
+
         String urlString = baseUrl + qmk + rpm + hcdMunicipality + allAreas + aps + fpm +
                 measure + covidFilter;
         System.out.println(urlString);
+
         String json = getJSON(urlString);
         Area A;
         hcdList = jsonToAreaList(json);
@@ -80,6 +93,18 @@ public class DataAPI {
         String areaIdnum = area.getIdnum();
         String dataIdnum; String dataIndex; String dataLabel; String dataValue;
         ArrayList<Data> covidDataList = null; //new ArrayList<>();
+
+        S = Settings.getInstance();
+        int language = S.getLanguage();
+        String baseUrl;
+        if (language == 0) {
+            baseUrl = baseUrlEn;
+        } else if (language == 1) {
+            baseUrl = baseUrlFi;
+        } else {
+            baseUrl = baseUrlEn;
+        }
+
         String urlString = baseUrl + qmk + rpm + hcdMunicipality + areaIdnum + aps +
                 cpm + dateWeek + allTimes + aps + fpm + measure + covidFilter;
         System.out.println(urlString);
