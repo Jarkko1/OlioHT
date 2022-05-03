@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     SearchView searchView;
     DataCenter C;
     Settings S;
+    SaveData SD;
 
     ListView listView;
     ArrayList townList;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
         C = DataCenter.getInstance();
         S = Settings.getInstance();
+        SD = SaveData.getInstance();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 

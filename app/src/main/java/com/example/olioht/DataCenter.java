@@ -54,6 +54,20 @@ public class DataCenter {
         for (int i = 0; i < areaList.size(); i++) {
             if (areaList.get(i).getLabel() == areaLabel) {
                 area = areaList.get(i);
+                break;
+            }
+        }
+        return(area);
+    }
+
+    private Area convertIdnumToArea(String areaIdnum) {
+        /* tällä voi muuntaa alueen nimen (vaikka "Helsinki")
+        sitä vastaavaksi id numeroksi */
+        Area area = null;
+        for (int i = 0; i < areaList.size(); i++) {
+            if (areaList.get(i).getIdnum() == areaIdnum) {
+                area = areaList.get(i);
+                break;
             }
         }
         return(area);
@@ -161,5 +175,13 @@ public class DataCenter {
         /* refresh currentAreaData */
         currentAreaData = DataAPI.getAreaCovidData(currentAreaData.getArea());
         return;
+    }
+
+    public ArrayList<String> getPinnedAreaIdnums() {
+        ArrayList<String> pinnedAreaIdnums = new ArrayList<>();
+        for (int i = 0; i < pinnedAreaData.size(); i++) {
+            pinnedAreaIdnums.add(pinnedAreaData.get(i).getArea().getIdnum());
+        }
+        return pinnedAreaIdnums;
     }
 }
