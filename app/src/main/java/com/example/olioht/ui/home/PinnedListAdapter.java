@@ -6,10 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.olioht.AreaCovidData;
-import com.example.olioht.CovidData;
+import com.example.olioht.AreaData;
+import com.example.olioht.Data;
 import com.example.olioht.R;
-import com.example.olioht.ui.covidData.MyRecyclerViewAdapter;
 
 import java.util.ArrayList;
 
@@ -17,10 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class PinnedListAdapter extends RecyclerView.Adapter<PinnedListAdapter.CustomViewHolder>{
-    private ArrayList<AreaCovidData> dataList;
+    private ArrayList<AreaData> dataList;
     private Context mContext;
 
-    public PinnedListAdapter(Context context, ArrayList<AreaCovidData> dataList) {
+    public PinnedListAdapter(Context context, ArrayList<AreaData> dataList) {
         this.dataList = dataList;
         this.mContext = context;
     }
@@ -35,10 +34,16 @@ public class PinnedListAdapter extends RecyclerView.Adapter<PinnedListAdapter.Cu
 
     @Override
     public void onBindViewHolder(@NonNull PinnedListAdapter.CustomViewHolder customViewHolder, int i) {
-        customViewHolder.textView1.setText(dataList.get(i).getArea().getLabel());
-        ArrayList<CovidData> covidData = dataList.get(i).getCases();
-        CovidData covidCase = covidData.get(covidData.size()-1);
-        customViewHolder.textView2.setText(covidCase.getLabel() + ": " + covidCase.getValue());
+        if (dataList.size() > i) {
+            customViewHolder.textView1.setText(dataList.get(i).getArea().getLabel());
+            ArrayList<Data> covidData = dataList.get(i).getCases();
+            if (covidData.size() > 0) {
+                Data covidCase = covidData.get(0);
+                customViewHolder.textView2.setText(covidCase.getLabel() + ": " + covidCase.getValue());
+            } else {
+                customViewHolder.textView2.setText("");
+            }
+        }
     }
 
     @Override

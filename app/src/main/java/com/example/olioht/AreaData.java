@@ -2,12 +2,12 @@ package com.example.olioht;
 
 import java.util.ArrayList;
 
-public class AreaCovidData {
+public class AreaData {
 
     private Area area = null;
-    private ArrayList<CovidData> cases = null;
+    private ArrayList<Data> cases = null;
 
-    public AreaCovidData (Area a, ArrayList<CovidData> c) {
+    public AreaData(Area a, ArrayList<Data> c) {
         area = a;
         cases = c;
     }
@@ -25,11 +25,11 @@ public class AreaCovidData {
         this.area = area;
     }
 
-    public ArrayList<CovidData> getCases() {
+    public ArrayList<Data> getCases() {
         return cases;
     }
 
-    public void setCases(ArrayList<CovidData> cases) {
+    public void setCases(ArrayList<Data> cases) {
         this.cases = cases;
     }
 }

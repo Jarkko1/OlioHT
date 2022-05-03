@@ -1,13 +1,13 @@
 package com.example.olioht;
 
-public class CovidData {
+public class Data {
 
     private String idnum; // id-numero
     private String index; // indeksi
     private String label; // teksti, esim 2022 viikko 18
     private String value; // tapausten lukumäärä
 
-    public CovidData(String dataIdnum, String dataIndex, String dataLabel, String dataValue) {
+    public Data(String dataIdnum, String dataIndex, String dataLabel, String dataValue) {
         idnum = dataIdnum;
         index = dataIndex;
         label = dataLabel;

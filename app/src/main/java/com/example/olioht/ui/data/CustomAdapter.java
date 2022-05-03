@@ -1,4 +1,4 @@
-package com.example.olioht.ui.covidData;
+package com.example.olioht.ui.data;
 
 
 import android.util.Log;
