@@ -35,6 +35,7 @@ public class SearchFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSearchBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
         searchView = (SearchView) root.findViewById(R.id.searchView);
         CovidCenter C = CovidCenter.getInstance();
         townList = C.getAreaLabels();
@@ -44,7 +45,8 @@ public class SearchFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getContext(),"You Click -"+adapterView.getItemAtPosition(i).toString(),Toast.LENGTH_SHORT);
+                System.out.println(adapterView.getSelectedItem());
+
             }
         });
 

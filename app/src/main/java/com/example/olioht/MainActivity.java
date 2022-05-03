@@ -1,5 +1,7 @@
 package com.example.olioht;
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.MenuInflater;
@@ -31,6 +33,7 @@ import com.example.olioht.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
         searchView = (SearchView) findViewById(R.id.searchView);
 
-
 //
 //        townList = new ArrayList();
 //        townList.add("Rauma");
@@ -92,13 +94,13 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
     }
-
+/*
     public void search(View V) {
         String searchStr = "Tampere";
         System.out.println(searchView.getQuery());
         //CovidData.search(searchStr);
     }
-
+*/
     public void test(View view) {
         /*
         FragmentManager supportFragmentManager = getSupportFragmentManager();
@@ -119,4 +121,17 @@ public class MainActivity extends AppCompatActivity {
          */
         Navigation.findNavController(view).navigate(R.id.action_navigation_home_to_blankFragment);
     }
+
+    public void setLang(String langCode){
+        Locale locale = new Locale(langCode);
+        locale.setDefault(locale);
+        Resources resources = this.getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config,resources.getDisplayMetrics());
+        finish();
+        startActivity(getIntent());
+    }
+
+
 }
