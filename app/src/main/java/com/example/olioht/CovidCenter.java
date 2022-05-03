@@ -10,14 +10,10 @@ public class CovidCenter {
 
     private static CovidCenter C = null;
 
-    private ArrayList<Area> areaList = null;  /* lista alueista ja niiden tunnuksista.
-    Käyttö: areaList.get(i).getId() tai areaList.get(i).getLabel(); */
-
-    private ArrayList<AreaCovidData> pinnedAreaCovidData = null;
-
-    private ArrayList<CovidData> covidDataList = null;
-
-    private ArrayList<String> areaLabels = null;
+    private ArrayList<Area> areaList = null; // List of all areas
+    private ArrayList<String> areaLabels = null; // Area labels as strings for the search page
+    private ArrayList<AreaCovidData> pinnedAreaCovidData = null; // Areas pinned to the home page
+    private AreaCovidData currentAreaData = null;
 
     public static CovidCenter getInstance() {
         if (C == null) {
@@ -35,8 +31,9 @@ public class CovidCenter {
         }
     }
 
-    public void searchData() {
-    /* tällä olisi tarkoitus hakea covid-tapausten määrät alueella */
+    public void searchData(String areaLabel) {
+        Area area = convertLabelToArea(areaLabel);
+        currentAreaData = CovidAPI.getAreaCovidData(area);
     }
 
     private String convertLabelToIdnum(String label) {
@@ -49,6 +46,18 @@ public class CovidCenter {
             }
         }
         return(idnum);
+    }
+
+    private Area convertLabelToArea(String areaLabel) {
+        /* tällä voi muuntaa alueen nimen (vaikka "Helsinki")
+        sitä vastaavaksi id numeroksi */
+        Area area = null;
+        for (int i = 0; i < areaList.size(); i++) {
+            if (areaList.get(i).getLabel() == areaLabel) {
+                area = areaList.get(i);
+            }
+        }
+        return(area);
     }
 
     public ArrayList<Area> getAreaList() {
@@ -87,9 +96,56 @@ public class CovidCenter {
         return areaLabels;
     }
 
+    public AreaCovidData getCurrentAreaData() {
+        return currentAreaData;
+    }
+
+    public void setCurrentAreaData(AreaCovidData currentAreaData) {
+        this.currentAreaData = currentAreaData;
+    }
+
     public void test() {
         areaList = null;
         AreaCovidData areaCovidData = null;
         areaCovidData = CovidAPI.getAreaCovidData(areaList.get(0));
+    }
+
+    public boolean isThisPinned(AreaCovidData areaData) {
+        boolean pinned = false;
+        for (int i = 0; i < pinnedAreaCovidData.size(); i++) {
+            AreaCovidData pinnedAreaData = pinnedAreaCovidData.get(i);
+            String thisAreaIdnum = areaData.getArea().getIdnum();
+            String pinnedAreaIdnum = pinnedAreaData.getArea().getIdnum();
+            if (thisAreaIdnum.equals(pinnedAreaIdnum)) {
+                pinned = true; break;
+            }
+        }
+        return pinned;
+    }
+
+    public void removePinnedAreaData(AreaCovidData areaData) {
+        for (int i = 0; i < pinnedAreaCovidData.size(); i++) {
+            String areaIdnum = areaData.getArea().getIdnum();
+            String pinnedAreaIdnum = pinnedAreaCovidData.get(i).getArea().getIdnum();
+            if (areaIdnum.equals(pinnedAreaIdnum)) {
+                pinnedAreaCovidData.remove(i);
+                break;
+            }
+        }
+        return;
+    }
+
+    public void addPinnedAreaData(AreaCovidData areaData) {
+        /*boolean pinned;
+        for (int i = 0; i < pinnedAreaCovidData.size(); i++) {
+            String areaIdnum = areaData.getArea().getIdnum();
+            String pinnedAreaIdnum = pinnedAreaCovidData.get(i).getArea().getIdnum();
+            if (areaIdnum.equals(pinnedAreaIdnum)) {
+                pinnedAreaCovidData.remove(i);
+                break;
+            }
+        }*/
+        pinnedAreaCovidData.add(areaData);
+        return;
     }
 }

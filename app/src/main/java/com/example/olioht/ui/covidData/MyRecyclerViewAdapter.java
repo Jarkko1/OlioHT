@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.olioht.AreaCovidData;
+import com.example.olioht.CovidData;
 import com.example.olioht.R;
 
 import java.util.ArrayList;
@@ -16,10 +18,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.CustomViewHolder> {
-    private ArrayList<String> dataList;
+    private ArrayList<CovidData> dataList;
     private Context mContext;
 
-    public MyRecyclerViewAdapter(Context context, ArrayList<String> dataList) {
+    public MyRecyclerViewAdapter(Context context, ArrayList<CovidData> dataList) {
         this.dataList = dataList;
         this.mContext = context;
     }
@@ -34,8 +36,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     @Override
     public void onBindViewHolder(CustomViewHolder customViewHolder, int i) {
-        String dataItem = dataList.get(i);
-        customViewHolder.textView.setText(dataList.get(i));
+        CovidData dataItem = dataList.get(i);
+        customViewHolder.textView.setText(dataItem.getLabel() + ": " + dataItem.getValue());
     }
 
     @Override

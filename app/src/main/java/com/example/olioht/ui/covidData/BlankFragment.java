@@ -1,6 +1,7 @@
 
 package com.example.olioht.ui.covidData;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,10 +27,14 @@ import java.util.ArrayList;
 public class BlankFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+    private CovidCenter C;
     private View view;
     private RecyclerView recyclerView;
     private MyRecyclerViewAdapter recyclerAdapter;
+    private AreaCovidData currentAreaData;
+    private boolean pinned;
     private ArrayList<String> dataList;
+    private Button pinUnpinButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,17 +46,54 @@ public class BlankFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        TextView testText = this.view.findViewById(R.id.testText);
-        CovidCenter C = CovidCenter.getInstance();
-        AreaCovidData areaCovidData = C.getSomeAreaCovidData();
-        dataList = getCovidDataAsStringList(areaCovidData);
+
+        /* Getting data */
+        C = CovidCenter.getInstance();
+        currentAreaData = C.getCurrentAreaData();
+        pinned = C.isThisPinned(currentAreaData);
+
+        /* Header text */
+        TextView headerText = this.view.findViewById(R.id.testText);
+        headerText.setText(currentAreaData.getArea().getLabel());
+
+        /* Setting up pin and unpin button: */
+        pinUnpinButton = this.view.findViewById(R.id.pinunpin);
+        if (pinned == true) {
+            pinUnpinButton.setText("Unpin");
+        } else {
+            pinUnpinButton.setText("Pin");
+        }
+        pinUnpinButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (pinned == true) {
+                    C.removePinnedAreaData(currentAreaData);
+                    pinned = false;
+                    pinUnpinButton.setText("Pin");
+                } else {
+                    C.addPinnedAreaData(currentAreaData);
+                    pinned = true;
+                    pinUnpinButton.setText("Unpin");
+                }
+            }
+        });
+
+        /* Setting up recyclerview */
         recyclerView = (RecyclerView) this.view.findViewById(R.id.dataRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerAdapter = new MyRecyclerViewAdapter(getActivity(), dataList);
+        recyclerAdapter = new MyRecyclerViewAdapter(getActivity(), currentAreaData.getCases());
         recyclerView.setAdapter(recyclerAdapter);
-        testText.setText(areaCovidData.getArea().getLabel());
     }
 
+    private void setPinUnPinButtonText() {
+        Button pinUnPinButton = this.view.findViewById(R.id.pinunpin);
+        if (C.isThisPinned(currentAreaData)) {
+            pinUnPinButton.setText("Pin");
+        } else {
+            pinUnPinButton.setText("Unpin");
+        }
+        return;
+    }
+    /*
     private ArrayList<String> getCovidDataAsStringList(AreaCovidData areaCovidData) {
         ArrayList<String> dataList = new ArrayList<>();
         ArrayList<CovidData> covidDataList = areaCovidData.getCases();
@@ -61,5 +104,5 @@ public class BlankFragment extends Fragment {
             }
         }
         return dataList;
-    }
+    }*/
 }
