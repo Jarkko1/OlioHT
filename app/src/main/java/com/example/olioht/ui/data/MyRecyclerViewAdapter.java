@@ -1,27 +1,24 @@
-package com.example.olioht.ui.covidData;
+package com.example.olioht.ui.data;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.olioht.AreaCovidData;
-import com.example.olioht.CovidData;
+import com.example.olioht.Data;
 import com.example.olioht.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.CustomViewHolder> {
-    private ArrayList<CovidData> dataList;
+    private ArrayList<Data> dataList;
     private Context mContext;
 
-    public MyRecyclerViewAdapter(Context context, ArrayList<CovidData> dataList) {
+    public MyRecyclerViewAdapter(Context context, ArrayList<Data> dataList) {
         this.dataList = dataList;
         this.mContext = context;
     }
@@ -36,7 +33,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     @Override
     public void onBindViewHolder(CustomViewHolder customViewHolder, int i) {
-        CovidData dataItem = dataList.get(i);
+        Data dataItem = dataList.get(i);
         customViewHolder.textView.setText(dataItem.getLabel() + ": " + dataItem.getValue());
     }
 

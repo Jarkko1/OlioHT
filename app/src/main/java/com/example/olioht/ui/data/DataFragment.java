@@ -1,7 +1,6 @@
 
-package com.example.olioht.ui.covidData;
+package com.example.olioht.ui.data;
 
-import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,42 +12,50 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.olioht.AreaCovidData;
-import com.example.olioht.CovidCenter;
-import com.example.olioht.CovidData;
+import com.example.olioht.AreaData;
+import com.example.olioht.DataCenter;
 import com.example.olioht.R;
+import com.example.olioht.Settings;
 import com.example.olioht.databinding.FragmentHomeBinding;
-import com.example.olioht.databinding.FragmentSettingsBinding;
 
 import java.util.ArrayList;
 
-public class BlankFragment extends Fragment {
+public class DataFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    private CovidCenter C;
+    private Settings S;
+    private int language;
+    private DataCenter C;
     private View view;
     private RecyclerView recyclerView;
     private MyRecyclerViewAdapter recyclerAdapter;
-    private AreaCovidData currentAreaData;
+    private AreaData currentAreaData;
     private boolean pinned;
     private ArrayList<String> dataList;
     private Button pinUnpinButton;
+    private String[] pin = {"Kiinnitä", "Pin"};
+    private String[] unpin = {"Poista kiinnitys", "Unpin"};
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_blank, container, false);
+        view = inflater.inflate(R.layout.fragment_data, container, false);
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
+        /* Getting settings */
+        S = Settings.getInstance();
+        language = S.getLanguage();
+
         /* Getting data */
-        C = CovidCenter.getInstance();
+        C = DataCenter.getInstance();
         currentAreaData = C.getCurrentAreaData();
         pinned = C.isThisPinned(currentAreaData);
 
@@ -59,20 +66,20 @@ public class BlankFragment extends Fragment {
         /* Setting up pin and unpin button: */
         pinUnpinButton = this.view.findViewById(R.id.pinunpin);
         if (pinned == true) {
-            pinUnpinButton.setText("Unpin");
+            pinUnpinButton.setText(unpin[language]);
         } else {
-            pinUnpinButton.setText("Pin");
+            pinUnpinButton.setText(pin[language]);
         }
         pinUnpinButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (pinned == true) {
                     C.removePinnedAreaData(currentAreaData);
                     pinned = false;
-                    pinUnpinButton.setText("Pin");
+                    pinUnpinButton.setText(pin[language]);
                 } else {
                     C.addPinnedAreaData(currentAreaData);
                     pinned = true;
-                    pinUnpinButton.setText("Unpin");
+                    pinUnpinButton.setText(unpin[language]);
                 }
             }
         });

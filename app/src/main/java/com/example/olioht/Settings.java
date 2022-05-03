@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Settings {
 
     private static Settings S = null;
-    private int language = 1;
+    private int language = 0;
 
     public static Settings getInstance() {
         if (S == null) {
@@ -19,12 +19,12 @@ public class Settings {
     }
 
     private Settings() {
-        language = 1;
-
+        language = 0;
     }
 
     public void setLanguage(int languageNumber) {
-        language = languageNumber;
+        this.language = languageNumber;
     }
 
+    public int getLanguage() {return language;}
 }

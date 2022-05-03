@@ -8,16 +8,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import com.example.olioht.CovidCenter;
-import com.example.olioht.MainActivity;
+import com.example.olioht.DataCenter;
 import com.example.olioht.R;
 import com.example.olioht.databinding.FragmentSearchBinding;
 
@@ -37,7 +33,7 @@ public class SearchFragment extends Fragment {
         binding = FragmentSearchBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         searchView = (SearchView) root.findViewById(R.id.searchView);
-        CovidCenter C = CovidCenter.getInstance();
+        DataCenter C = DataCenter.getInstance();
         townList = C.getAreaLabels();
         listView = (ListView) root.findViewById(R.id.listView);
         arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,android.R.id.text1, townList);

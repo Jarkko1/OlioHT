@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
-public class CovidAPI {
+public class DataAPI {
     /*
     private static CovidAPI C = null;
 
@@ -76,10 +76,10 @@ public class CovidAPI {
         return (cityList);
     }
 
-    public static AreaCovidData getAreaCovidData(Area area) {
+    public static AreaData getAreaCovidData(Area area) {
         String areaIdnum = area.getIdnum();
         String dataIdnum; String dataIndex; String dataLabel; String dataValue;
-        ArrayList<CovidData> covidDataList = null; //new ArrayList<>();
+        ArrayList<Data> covidDataList = null; //new ArrayList<>();
         String urlString = baseUrl + qmk + rpm + hcdMunicipality + areaIdnum + aps +
                 cpm + dateWeek + allTimes + aps + fpm + measure + covidFilter;
         System.out.println(urlString);
@@ -104,7 +104,7 @@ public class CovidAPI {
                 if (jsonLabel.has(dataIdnum)) { dataLabel = jsonLabel.getString(dataIdnum); };
                 if (jsonValue.has(dataIndex)) { dataValue = jsonValue.getString(dataIndex); };
                 if (dataValue != null) {
-                    covidDataList.add(new CovidData(dataIdnum, dataIndex, dataLabel, dataValue));
+                    covidDataList.add(new Data(dataIdnum, dataIndex, dataLabel, dataValue));
                 }
                 //System.out.println(dataIdnum + " " + dataIndex + " " + dataLabel + " " + dataValue);
             }
@@ -112,8 +112,8 @@ public class CovidAPI {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        AreaCovidData areaCovidData = new AreaCovidData(area, covidDataList);
-        return(areaCovidData);
+        AreaData areaData = new AreaData(area, covidDataList);
+        return(areaData);
     }
 
     private static ArrayList<Area> jsonToAreaList(String json) {

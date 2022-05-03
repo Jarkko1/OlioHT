@@ -2,42 +2,29 @@ package com.example.olioht;
 
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.view.MenuInflater;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.SearchView;
-import android.widget.Toast;
 
-import com.example.olioht.ui.covidData.BlankFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.olioht.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
     SearchView searchView;
-    CovidCenter C;
+    DataCenter C;
 
     ListView listView;
     ArrayList townList;
@@ -48,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        C = CovidCenter.getInstance();
+        C = DataCenter.getInstance();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
