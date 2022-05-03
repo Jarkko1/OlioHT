@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.olioht.CovidCenter;
 import com.example.olioht.MainActivity;
 import com.example.olioht.R;
 import com.example.olioht.databinding.FragmentSearchBinding;
@@ -27,7 +28,7 @@ public class SearchFragment extends Fragment {
 
     SearchView searchView;
     ListView listView;
-    ArrayList townList;
+    ArrayList<String> townList;
     ArrayAdapter<String> arrayAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -35,9 +36,8 @@ public class SearchFragment extends Fragment {
         binding = FragmentSearchBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         searchView = (SearchView) root.findViewById(R.id.searchView);
-        townList = new ArrayList();
-        townList.add("Rauma");
-        townList.add("Tampere");
+        CovidCenter C = CovidCenter.getInstance();
+        townList = C.getAreaLabels();
         listView = (ListView) root.findViewById(R.id.listView);
         arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,android.R.id.text1, townList);
         listView.setAdapter(arrayAdapter);

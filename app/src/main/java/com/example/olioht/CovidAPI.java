@@ -29,6 +29,7 @@ public class CovidAPI {
 
     /* baseUrl -muuttuja sisältää kaikille API-osoitteille yhteisen osan URL-osoitetta. */
     private static String baseUrl = "https://sampo.thl.fi/pivot/prod/fi/epirapo/covid19case/fact_epirapo_covid19case.json";
+    private static String baseUrlEn = "https://sampo.thl.fi/pivot/prod/en/epirapo/covid19case/fact_epirapo_covid19case.json";
     private static String qmk = "?";
     private static String aps = "&";
     private static String hpn = "-";
@@ -101,13 +102,10 @@ public class CovidAPI {
                 if (jsonIndex.has(dataIdnum)) { dataIndex = jsonIndex.getString(dataIdnum); };
                 if (jsonLabel.has(dataIdnum)) { dataLabel = jsonLabel.getString(dataIdnum); };
                 if (jsonValue.has(dataIndex)) { dataValue = jsonValue.getString(dataIndex); };
-                covidDataList.add(new CovidData(dataIdnum, dataIndex, dataLabel, dataValue));
-                System.out.println(dataIdnum + " " + dataIndex + " " + dataLabel + " " + dataValue);
-            }
-            for (int i = 0; i < covidDataList.size(); i++) {
-                CovidData c = covidDataList.get(i);
-                System.out.println(i + " " + c.getIdnum() + " " + c.getIndex() + " "
-                        + c.getLabel() + " " + c.getValue());
+                if (dataValue != null) {
+                    covidDataList.add(new CovidData(dataIdnum, dataIndex, dataLabel, dataValue));
+                }
+                //System.out.println(dataIdnum + " " + dataIndex + " " + dataLabel + " " + dataValue);
             }
         } catch (JSONException e) {
             e.printStackTrace();

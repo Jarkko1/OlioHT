@@ -1,6 +1,10 @@
 package com.example.olioht;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 public class CovidCenter {
 
@@ -13,6 +17,8 @@ public class CovidCenter {
 
     private ArrayList<CovidData> covidDataList = null;
 
+    private ArrayList<String> areaLabels = null;
+
     public static CovidCenter getInstance() {
         if (C == null) {
             C = new CovidCenter();
@@ -22,28 +28,10 @@ public class CovidCenter {
 
     private CovidCenter() {
         areaList = CovidAPI.getAreaList();
-        AreaCovidData areaCovidData = null;
+        areaLabels = areaLabelsList();
         pinnedAreaCovidData = new ArrayList<>();
-        System.out.println("Here we are.");
-        areaCovidData = CovidAPI.getAreaCovidData(areaList.get(0));
-        System.out.println("Here we are now.");
-        if (areaCovidData == null) {
-            System.out.println("Weird.");
-        } else {
-            System.out.println("Ok, good.");
-            Area A = areaCovidData.getArea();
-            if (A == null) {
-                System.out.println("Weirder.");
-            } else {
-                System.out.println("Is it really working?.");
-            }
-        }
         for (int i = 0; i < 3; i++) {
-            pinnedAreaCovidData.add(areaCovidData);
-        }
-        for (int i = 0; i < 3; i++) {
-            Area A = pinnedAreaCovidData.get(i).getArea();
-            System.out.println(A.getIdnum());
+            pinnedAreaCovidData.add(CovidAPI.getAreaCovidData(areaList.get(i)));
         }
     }
 
@@ -71,16 +59,32 @@ public class CovidCenter {
         pinnedAreaCovidData.add(areaCovidData);
     }
 
-    public ArrayList<String> getPinnedAreaCovidData() {
-        ArrayList<String> pinnedStringList = new ArrayList<>();
-        int a;
-        for (int i = 0; i < pinnedAreaCovidData.size(); i++) {
-            Area A = pinnedAreaCovidData.get(i).getArea();
-            if (A != null) {
-                pinnedStringList.add(A.getLabel());
-            }
+    public ArrayList<AreaCovidData> getPinnedAreaCovidData() {
+        return(pinnedAreaCovidData);
+    }
+
+    public AreaCovidData getSomeAreaCovidData() {
+        Area area = areaList.get(19);
+        AreaCovidData areaCovidData = CovidAPI.getAreaCovidData(area);
+        return areaCovidData;
+    }
+
+    public ArrayList<String> areaLabelsList() {
+        areaLabels = new ArrayList<String>();
+        for (int i = 0; i < areaList.size(); i++) {
+            areaLabels.add(areaList.get(i).getLabel());
         }
-        return(pinnedStringList);
+        if (areaLabels.size() > 0) {
+            Collections.sort(areaLabels);
+            Set<String> set = new LinkedHashSet<String>();
+            set.addAll(areaLabels);
+            areaLabels.clear();
+            areaLabels.addAll(set);
+        }
+        return areaLabels;
+    }
+    public ArrayList<String> getAreaLabels() {
+        return areaLabels;
     }
 
     public void test() {
