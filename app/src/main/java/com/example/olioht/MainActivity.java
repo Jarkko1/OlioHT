@@ -1,30 +1,46 @@
 package com.example.olioht;
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.MenuInflater;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.SearchView;
+import android.widget.Toast;
 
+import com.example.olioht.ui.covidData.BlankFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.olioht.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
     SearchView searchView;
-    DataCenter C;
+    CovidCenter C;
 
     ListView listView;
     ArrayList townList;
@@ -35,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        C = DataCenter.getInstance();
+        C = CovidCenter.getInstance();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -49,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
         searchView = (SearchView) findViewById(R.id.searchView);
-
 
 //
 //        townList = new ArrayList();
@@ -79,13 +94,13 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
     }
-
+/*
     public void search(View V) {
         String searchStr = "Tampere";
         System.out.println(searchView.getQuery());
         //CovidData.search(searchStr);
     }
-
+*/
     public void test(View view) {
         /*
         FragmentManager supportFragmentManager = getSupportFragmentManager();
@@ -106,4 +121,17 @@ public class MainActivity extends AppCompatActivity {
          */
         Navigation.findNavController(view).navigate(R.id.action_navigation_home_to_blankFragment);
     }
+
+    public void setLang(String langCode){
+        Locale locale = new Locale(langCode);
+        locale.setDefault(locale);
+        Resources resources = this.getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config,resources.getDisplayMetrics());
+        finish();
+        startActivity(getIntent());
+    }
+
+
 }
