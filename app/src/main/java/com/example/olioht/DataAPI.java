@@ -75,16 +75,19 @@ public class DataAPI {
                 json = getJSON(urlString);
                 cityList.addAll(jsonToAreaList(json));
             }
+            /*
             System.out.println("###Sairaanhoitopiirit:###");
+
             for (int i = 0; i < hcdList.size(); i++) {
                 A = hcdList.get(i);
                 System.out.println(A.getIdnum() + " " + A.getLabel());
             }
-            System.out.println("###Kunnat:###");
+            //System.out.println("###Kunnat:###");
             for (int i = 0; i < cityList.size(); i++) {
                 A = cityList.get(i);
-                System.out.println(A.getIdnum() + " " + A.getLabel());
+                //System.out.println(A.getIdnum() + " " + A.getLabel());
             }
+             */
         }
         return (cityList);
     }
@@ -160,7 +163,7 @@ public class DataAPI {
                     String currentId = (String) keys.next();
                     String currentLabel = jsonLabel.getString(currentId);
                     areaList.add(new Area(currentId, currentLabel, String.valueOf(i + 1)));
-                    System.out.println(i + " " + currentId + " " + currentLabel);
+                    //System.out.println(i + " " + currentId + " " + currentLabel);
                     i++;
                 }
             } catch (JSONException e) {

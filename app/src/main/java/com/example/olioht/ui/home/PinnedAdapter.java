@@ -15,25 +15,25 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class PinnedListAdapter extends RecyclerView.Adapter<PinnedListAdapter.CustomViewHolder>{
+public class PinnedAdapter extends RecyclerView.Adapter<PinnedAdapter.CustomViewHolder>{
     private ArrayList<AreaData> dataList;
     private Context mContext;
 
-    public PinnedListAdapter(Context context, ArrayList<AreaData> dataList) {
+    public PinnedAdapter(Context context, ArrayList<AreaData> dataList) {
         this.dataList = dataList;
         this.mContext = context;
     }
 
     @NonNull
     @Override
-    public PinnedListAdapter.CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public PinnedAdapter.CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.pinned_item, viewGroup, false);
-        PinnedListAdapter.CustomViewHolder viewHolder = new PinnedListAdapter.CustomViewHolder(view);
+        PinnedAdapter.CustomViewHolder viewHolder = new PinnedAdapter.CustomViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PinnedListAdapter.CustomViewHolder customViewHolder, int i) {
+    public void onBindViewHolder(@NonNull PinnedAdapter.CustomViewHolder customViewHolder, int i) {
         if (dataList.size() > i) {
             customViewHolder.textView1.setText(dataList.get(i).getArea().getLabel());
             ArrayList<Data> covidData = dataList.get(i).getCases();

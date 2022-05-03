@@ -1,5 +1,6 @@
 package com.example.olioht;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -45,17 +46,19 @@ public class MainActivity extends AppCompatActivity {
     SaveData SD;
 
     ListView listView;
-    ArrayList townList;
+    //ArrayList townList;
     ArrayAdapter<String> arrayAdapter;
 
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this; //getApplicationContext();
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         C = DataCenter.getInstance();
         S = Settings.getInstance();
-        SD = SaveData.getInstance();
+        SD = SaveData.getInstance(this);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 

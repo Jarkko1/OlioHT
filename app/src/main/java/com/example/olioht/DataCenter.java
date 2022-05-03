@@ -173,7 +173,9 @@ public class DataCenter {
         }
 
         /* refresh currentAreaData */
-        currentAreaData = DataAPI.getAreaCovidData(currentAreaData.getArea());
+        if (currentAreaData != null) {
+            currentAreaData = DataAPI.getAreaCovidData(currentAreaData.getArea());
+        }
         return;
     }
 

@@ -14,11 +14,11 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.CustomViewHolder> {
+public class DataAdapter extends RecyclerView.Adapter<DataAdapter.CustomViewHolder> {
     private ArrayList<Data> dataList;
     private Context mContext;
 
-    public MyRecyclerViewAdapter(Context context, ArrayList<Data> dataList) {
+    public DataAdapter(Context context, ArrayList<Data> dataList) {
         this.dataList = dataList;
         this.mContext = context;
     }

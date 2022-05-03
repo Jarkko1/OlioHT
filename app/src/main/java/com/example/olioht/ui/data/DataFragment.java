@@ -29,7 +29,7 @@ public class DataFragment extends Fragment {
     private DataCenter C;
     private View view;
     private RecyclerView recyclerView;
-    private MyRecyclerViewAdapter recyclerAdapter;
+    private DataAdapter recyclerAdapter;
     private AreaData currentAreaData;
     private boolean pinned;
     private ArrayList<String> dataList;
@@ -87,7 +87,7 @@ public class DataFragment extends Fragment {
         /* Setting up recyclerview */
         recyclerView = (RecyclerView) this.view.findViewById(R.id.dataRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerAdapter = new MyRecyclerViewAdapter(getActivity(), currentAreaData.getCases());
+        recyclerAdapter = new DataAdapter(getActivity(), currentAreaData.getCases());
         recyclerView.setAdapter(recyclerAdapter);
     }
 
