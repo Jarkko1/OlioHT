@@ -27,7 +27,7 @@ public class PinnedListAdapter extends RecyclerView.Adapter<PinnedListAdapter.Cu
     @NonNull
     @Override
     public PinnedListAdapter.CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.pinned_item, null);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.pinned_item, viewGroup, false);
         PinnedListAdapter.CustomViewHolder viewHolder = new PinnedListAdapter.CustomViewHolder(view);
         return viewHolder;
     }
