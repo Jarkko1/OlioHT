@@ -23,10 +23,12 @@ public class Settings {
     }
 
     public void setLanguage(int languageNumber) {
+        /* sets the language variable according to a language number */
         this.language = languageNumber;
     }
 
     public void setLanguageWithLangCode(String langCode) {
+        /* sets the language variable according to a language code */
         if (langCode.equals("fi")) {
             this.language = 1;
         } else if (langCode.equals("en")) {

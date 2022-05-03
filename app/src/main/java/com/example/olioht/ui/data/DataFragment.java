@@ -100,16 +100,4 @@ public class DataFragment extends Fragment {
         }
         return;
     }
-    /*
-    private ArrayList<String> getCovidDataAsStringList(AreaCovidData areaCovidData) {
-        ArrayList<String> dataList = new ArrayList<>();
-        ArrayList<CovidData> covidDataList = areaCovidData.getCases();
-        for (int i = (covidDataList.size() - 1); i >= 0; i--) {
-            CovidData covidData = covidDataList.get(i);
-            if (covidData.getValue() != null) {
-                dataList.add(covidData.getLabel() + ":   " + covidData.getValue());
-            }
-        }
-        return dataList;
-    }*/
 }

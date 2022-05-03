@@ -14,7 +14,7 @@ public class DataCenter {
     private ArrayList<Area> areaList = null; // List of all areas
     private ArrayList<String> areaLabels = null; // Area labels as strings for the search page
     private ArrayList<AreaData> pinnedAreaData = new ArrayList<>(); // Areas pinned to the home page
-    private AreaData currentAreaData = null;
+    private AreaData currentAreaData = null; // area from search / home page
     private SaveData SD;
 
     public static DataCenter getInstance() {
@@ -45,11 +45,13 @@ public class DataCenter {
         }
     }
 
+    /* gets area covid data with area label from search */
     public void searchData(String areaLabel) {
         Area area = convertLabelToArea(areaLabel);
         currentAreaData = DataAPI.getAreaCovidData(area);
     }
 
+    /* Converts area label to the corresponding area id number */
     private String convertLabelToIdnum(String label) {
         /* tällä voi muuntaa alueen nimen (vaikka "Helsinki")
         sitä vastaavaksi id numeroksi */
@@ -62,6 +64,7 @@ public class DataCenter {
         return(idnum);
     }
 
+    /* Converts area label to the corresponding area */
     private Area convertLabelToArea(String areaLabel) {
         /* tällä voi muuntaa alueen nimen (vaikka "Helsinki")
         sitä vastaavaksi id numeroksi */
@@ -75,6 +78,7 @@ public class DataCenter {
         return(area);
     }
 
+    /* Converts area id number to the corresponding area */
     private Area convertIdnumToArea(String areaIdnum) {
         /* tällä voi muuntaa alueen nimen (vaikka "Helsinki")
         sitä vastaavaksi id numeroksi */
@@ -90,10 +94,6 @@ public class DataCenter {
 
     public ArrayList<Area> getAreaList() {
         return(areaList);
-    }
-
-    public void addPinnedArea(AreaData areaData) {
-        pinnedAreaData.add(areaData);
     }
 
     public ArrayList<AreaData> getPinnedAreaCovidData() {
@@ -126,12 +126,7 @@ public class DataCenter {
         this.currentAreaData = currentAreaData;
     }
 
-    public void test() {
-        areaList = null;
-        AreaData areaData = null;
-        areaData = DataAPI.getAreaCovidData(areaList.get(0));
-    }
-
+    /* check if current area is already pinned to home page */
     public boolean isThisPinned(AreaData areaData) {
         boolean pinned = false;
         if (pinnedAreaData != null) {
@@ -162,20 +157,12 @@ public class DataCenter {
     }
 
     public void addPinnedAreaData(AreaData areaData) {
-        /*boolean pinned;
-        for (int i = 0; i < pinnedAreaCovidData.size(); i++) {
-            String areaIdnum = areaData.getArea().getIdnum();
-            String pinnedAreaIdnum = pinnedAreaCovidData.get(i).getArea().getIdnum();
-            if (areaIdnum.equals(pinnedAreaIdnum)) {
-                pinnedAreaCovidData.remove(i);
-                break;
-            }
-        }*/
         pinnedAreaData.add(areaData);
         SD.writePinned();
         return;
     }
 
+    /* refreshes all data */
     public void refreshData() {
         /* refresh areaList */
         areaList = getAreaList();
@@ -191,10 +178,12 @@ public class DataCenter {
             currentAreaData = DataAPI.getAreaCovidData(currentAreaData.getArea());
         }
 
+        /* refresh area labels list */
         areaLabels = areaLabelsList();
         return;
     }
 
+    /* returns the id numbers of all pinned areas */
     public ArrayList<String> getPinnedAreaIdnums() {
         ArrayList<String> pinnedAreaIdnums = new ArrayList<>();
         for (int i = 0; i < pinnedAreaData.size(); i++) {

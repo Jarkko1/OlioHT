@@ -1,13 +1,10 @@
 package com.example.olioht;
 
 public class Area {
-    /*
-    Alue-luokka; sisältää alueen tunnuksen ja nimen (sekä indeksin...?).
-    Alue voi olla kunta tai sairaanhoitopiiri.
-     */
-    private String idnum;
-    private String label;
-    private String index;
+
+    private String idnum; // id-number
+    private String label; // label / area name
+    private String index; // index number
 
     public Area(String areaId, String areaLabel, String areaIndex) {
         this.idnum = areaId;

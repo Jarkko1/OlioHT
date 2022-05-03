@@ -61,13 +61,9 @@ public class MainActivity extends AppCompatActivity {
         S = Settings.getInstance();
         S.setLanguageWithLangCode(langCode);
         C = DataCenter.getInstance();
-        //setLang(langCode);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_search, R.id.navigation_settings)
                 .build();
@@ -78,36 +74,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void test(View view) {
-        /*
-        FragmentManager supportFragmentManager = getSupportFragmentManager();
-        NavHostFragment navHostFragment = (NavHostFragment) supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main);
-        NavController navController = navHostFragment.getNavController();
-        NavDirections action = fragment_home_directions.actionHomeFragmentToBlankFragment();
-        */
-        //NavDirections action = BlankFragmentDirections.actionHomeFragmentToBlankFragment();
-        //Navigation.findNavController(view).navigate(action);
-        /*
-        Fragment fragment = new BlankFragment();
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        //transaction.hide()
-        transaction.replace(R.id.nav_host_fragment_activity_main, fragment);
-        transaction.commit();
-
-         */
-        Navigation.findNavController(view).navigate(R.id.action_navigation_home_to_dataFragment);
-    }
-
     public void setLang(String langCode){
         /* Sets the new Language for the app and restarts it */
-
         Locale locale = new Locale(langCode);
         locale.setDefault(locale);
         Resources resources = this.getResources();
         Configuration config = resources.getConfiguration();
         config.setLocale(locale);
-        saveLocale(langCode);
+        saveLang(langCode);
         resources.updateConfiguration(config,resources.getDisplayMetrics());
         finish();
         startActivity(getIntent());
@@ -117,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         if (lang.equalsIgnoreCase(""))
             return;
         Locale myLocale = new Locale(lang);
-        saveLocale(lang);
+        saveLang(lang);
         Locale.setDefault(myLocale);
         android.content.res.Configuration config = new android.content.res.Configuration();
         config.locale = myLocale;
@@ -126,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public String loadLang() {
+        /* loads current language setting */
         String langPref = "Language";
         SharedPreferences prefs = getSharedPreferences("CommonPrefs",
                 Activity.MODE_PRIVATE);
@@ -135,7 +110,8 @@ public class MainActivity extends AppCompatActivity {
         return language;
     }
 
-    public void saveLocale(String lang) {
+    public void saveLang(String lang) {
+        /* saves language setting */
         String langPref = "Language";
         SharedPreferences prefs = getSharedPreferences("CommonPrefs",
                 Activity.MODE_PRIVATE);

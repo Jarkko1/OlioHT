@@ -52,6 +52,7 @@ public class SaveData {
     }
 
     public void writePinned() {
+        /* saves the id numbers of all pinned areas into a json file */
         D = DataCenter.getInstance();
         String json = "";
         ArrayList<String> pinnedAreaIdnums = D.getPinnedAreaIdnums();
@@ -67,6 +68,7 @@ public class SaveData {
     }
 
     public ArrayList<String> readPinned() {
+        /* reads the id numbers of all pinned areas from a json file */
         String json;
         ArrayList<String> pinnedAreaIdnums = new ArrayList<>();
         json = readFile();
@@ -82,14 +84,6 @@ public class SaveData {
             e.printStackTrace();
         }
         return pinnedAreaIdnums;
-    }
-
-    public void writeSettings() {
-
-    }
-
-    public int readSettings() {
-        return 0;
     }
 
     private String readFile() {

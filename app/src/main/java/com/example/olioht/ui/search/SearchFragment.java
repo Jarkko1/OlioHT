@@ -52,7 +52,6 @@ public class SearchFragment extends Fragment {
                 System.out.println("Search: " + areaLabel);
                 C.searchData(areaLabel);
                 Navigation.findNavController(view).navigate(R.id.action_navigation_search_to_dataFragment);
-                //Toast.makeText(getContext(),"You Click -"+adapterView.getItemAtPosition(i).toString(),Toast.LENGTH_SHORT);
             }
         });
 

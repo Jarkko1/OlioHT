@@ -17,18 +17,7 @@ import java.util.Collections;
 import java.util.Iterator;
 
 public class DataAPI {
-    /*
-    private static CovidAPI C = null;
 
-    public static CovidAPI getInstance() {
-        if (C == null) {
-            C = new CovidAPI();
-        }
-        return(C);
-    }
-    */
-
-    /* baseUrl -muuttuja sisältää kaikille API-osoitteille yhteisen osan URL-osoitetta. */
     private static String baseUrlFi = "https://sampo.thl.fi/pivot/prod/fi/epirapo/covid19case/fact_epirapo_covid19case.json";
     private static String baseUrlEn = "https://sampo.thl.fi/pivot/prod/en/epirapo/covid19case/fact_epirapo_covid19case.json";
     private static String qmk = "?";
@@ -46,6 +35,7 @@ public class DataAPI {
     private static Settings S;
 
     public static ArrayList<Area> getAreaList(){
+        /* gets a list of searchable areas from the THL API */
         ArrayList<Area> cityList = new ArrayList<>();
         ArrayList<Area> hcdList = new ArrayList<>();
 
@@ -65,7 +55,6 @@ public class DataAPI {
         System.out.println(urlString);
 
         String json = getJSON(urlString);
-        Area A;
         hcdList = jsonToAreaList(json);
         if (hcdList != null) {
             for (int i = 0; i < hcdList.size(); i++) {
@@ -75,24 +64,12 @@ public class DataAPI {
                 json = getJSON(urlString);
                 cityList.addAll(jsonToAreaList(json));
             }
-            /*
-            System.out.println("###Sairaanhoitopiirit:###");
-
-            for (int i = 0; i < hcdList.size(); i++) {
-                A = hcdList.get(i);
-                System.out.println(A.getIdnum() + " " + A.getLabel());
-            }
-            //System.out.println("###Kunnat:###");
-            for (int i = 0; i < cityList.size(); i++) {
-                A = cityList.get(i);
-                //System.out.println(A.getIdnum() + " " + A.getLabel());
-            }
-             */
         }
         return (cityList);
     }
 
     public static AreaData getAreaCovidData(Area area) {
+        /* gets covid data for the specified area from the THL API */
         AreaData areaData = null;
         if (area != null) {
             String areaIdnum = area.getIdnum();
@@ -100,7 +77,7 @@ public class DataAPI {
             String dataIndex;
             String dataLabel;
             String dataValue;
-            ArrayList<Data> covidDataList = null; //new ArrayList<>();
+            ArrayList<Data> covidDataList = null;
 
             S = Settings.getInstance();
             int language = S.getLanguage();
@@ -117,7 +94,6 @@ public class DataAPI {
                     cpm + dateWeek + allTimes + aps + fpm + measure + covidFilter;
             System.out.println(urlString);
             String json = getJSON(urlString);
-            //System.out.println(json);
             try {
                 JSONObject jsonObject = new JSONObject(json);
                 JSONObject jsonDataset = jsonObject.getJSONObject("dataset");
@@ -151,7 +127,6 @@ public class DataAPI {
                     if (dataValue != null && dataIdnum.equals(allTimes) == false) {
                         covidDataList.add(new Data(dataIdnum, dataIndex, dataLabel, dataValue));
                     }
-                    //System.out.println(dataIdnum + " " + dataIndex + " " + dataLabel + " " + dataValue);
                 }
                 Collections.reverse(covidDataList);
             } catch (JSONException e) {
@@ -163,6 +138,7 @@ public class DataAPI {
     }
 
     private static ArrayList<Area> jsonToAreaList(String json) {
+        /* Parses json file containing searchable areas into a list of areas */
         ArrayList<Area> areaList = null;
         if (json != null) {
             try {
@@ -191,15 +167,11 @@ public class DataAPI {
         return(areaList);
     }
 
-    /* Tämä siis hakee itse datan. urlString muuttujaa muokkaamalla voi rajata dataa */
     private static String getJSON(String urlString) {
+        /* Gets json file from the THL API */
         System.out.println(urlString);
         String response = null;
         try {
-            //URL url = new URL("http://www.hel.fi/palvelukarttaws/rest/v4/department/");
-            //String urlString = "https://sampo.thl.fi/pivot/prod/fi/epirapo/covid19case/fact_epirapo_covid19case.json?column=dateweek20200101-509030&filter=measure-444833";
-            //String urlString = "https://sampo.thl.fi/pivot/prod/fi/epirapo/covid19case/fact_epirapo_covid19case.json";
-            //String urlString = "http://www.hel.fi/palvelukarttaws/rest/v4/department/";
             URL url = new URL(urlString);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");

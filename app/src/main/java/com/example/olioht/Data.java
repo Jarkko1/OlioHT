@@ -2,10 +2,10 @@ package com.example.olioht;
 
 public class Data {
 
-    private String idnum; // id-numero
-    private String index; // indeksi
-    private String label; // teksti, esim 2022 viikko 18
-    private String value; // tapausten lukumäärä
+    private String idnum; // id-number
+    private String index; // index number
+    private String label; // label, for example week number and date
+    private String value; // number of cases
 
     public Data(String dataIdnum, String dataIndex, String dataLabel, String dataValue) {
         idnum = dataIdnum;
