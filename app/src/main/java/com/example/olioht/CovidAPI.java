@@ -13,6 +13,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 public class CovidAPI {
@@ -107,6 +108,7 @@ public class CovidAPI {
                 }
                 //System.out.println(dataIdnum + " " + dataIndex + " " + dataLabel + " " + dataValue);
             }
+            Collections.reverse(covidDataList);
         } catch (JSONException e) {
             e.printStackTrace();
         }

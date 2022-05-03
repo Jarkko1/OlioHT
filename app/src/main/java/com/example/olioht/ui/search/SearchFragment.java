@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.example.olioht.CovidCenter;
 import com.example.olioht.MainActivity;
@@ -35,7 +36,6 @@ public class SearchFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSearchBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
         searchView = (SearchView) root.findViewById(R.id.searchView);
         CovidCenter C = CovidCenter.getInstance();
         townList = C.getAreaLabels();
@@ -45,8 +45,11 @@ public class SearchFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                System.out.println(adapterView.getSelectedItem());
-
+                String areaLabel = adapterView.getItemAtPosition(i).toString();
+                System.out.println("Search: " + areaLabel);
+                C.searchData(areaLabel);
+                Navigation.findNavController(view).navigate(R.id.action_navigation_search_to_blankFragment);
+                //Toast.makeText(getContext(),"You Click -"+adapterView.getItemAtPosition(i).toString(),Toast.LENGTH_SHORT);
             }
         });
 
