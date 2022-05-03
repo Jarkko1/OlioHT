@@ -35,6 +35,8 @@ public class SaveData {
         D = DataCenter.getInstance();
         newFile();
     }
+
+    /*
     private void getFile() {
         try {
 
@@ -48,7 +50,7 @@ public class SaveData {
 
         }
     }
-
+*/
 
     private void newFile() {
         try {
@@ -83,7 +85,7 @@ public class SaveData {
         bufferedWriter.write(userString);
         bufferedWriter.close();*/
     }
-
+/*
     private String read(Context context, String fileName) {
         try {
             FileInputStream fis = context.openFileInput(fileName);
@@ -95,7 +97,7 @@ public class SaveData {
 
         }
     }
-
+*/
     
 
 }
